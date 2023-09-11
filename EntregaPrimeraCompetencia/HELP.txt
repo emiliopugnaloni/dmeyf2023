@@ -1,1 +1,8 @@
 
+(1) Se debe correr el archivo .ipynb donde a partir de el dataset original (competencia_01.csv). Se va a generar un nuevo dataset (competencia_01_FE_v02) con la columna de la clase ternaria y una serie de columnas mas para ser usadas en el modelo (Feature Engineering)
+(2) Se debe correr el archivo .R que es el que va a producir la salida final para kaggle. Los hiperparametros del arbol son los siguientes:
+
+minsplit	minbucket	maxdepth	corte
+2379	287	30	8866
+
+(3) El archivo HT3330_FE_v02001.csv es la salida de (2). Es el que se subio al kaggle
