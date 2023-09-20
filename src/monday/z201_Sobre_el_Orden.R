@@ -15,10 +15,11 @@ require("rpart")
 require("ggplot2")
 
 
-# Poner la carpeta de la materia de SU computadora local
-setwd("/home/aleb/dmeyf23/")
+# Poner la carpeta de la materia de SU computadora 
+setwd("C:/Users/emiba/Documents/DMenEyF")
+
 # Poner sus semillas
-semillas <- c(17, 19, 23, 29, 31)
+semillas <- c(673787,673789,673811,673817,673837)
 
 # Cargamos el dataset
 dataset <- fread("./datasets/competencia_01.csv")
@@ -93,6 +94,9 @@ print(hojas[,])
 ## - ¿Con qué criterio eligió la clase de cada hoja que determino la
 ##   clasificación de los registros?
 ## - ¿Cuántas hojas con BAJAS+2 hay?
+
+## Si miramos esto, vemos que predecimos pocos baja. Esto no es rentable. Pero las hojas pueden habernos clasificado bien algo, si se mira la ganancia de cada hoja:
+## tenemos que podemos tener mucha ganancia
 
 ## ---------------------------
 ## Step 3: Calculando la ganancia de cada hoja
@@ -190,7 +194,7 @@ ggplot(hojasordenadas, aes(x = p_evento ,y = gan_acum)) +
 
 ## Pregunta
 ## ¿Cómo interpretamos este gráfico?
-
+#esta es la grafica de ganancia si voy cambiand el punto de core
 ## ---------------------------
 ## Step 8: No todo es plata en la vida
 ## ---------------------------
@@ -238,7 +242,7 @@ ggplot(hojasordenadas, aes(x = fpr, y = tpr)) +
 
 ## Pregunta
 ## ¿Qué representa la curva ROC?
-
+# representa la aversion al riesgo vs la ganancia. Cual es la tasa de falsos positivos que estoy dispuesto a tener por una tasa de verdaderos positivos
 ## ---------------------------
 ## Step 10: Calculando el área bajo la curva
 ## ---------------------------

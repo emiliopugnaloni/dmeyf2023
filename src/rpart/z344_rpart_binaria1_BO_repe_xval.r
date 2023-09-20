@@ -21,7 +21,7 @@ require("mlrMBO")
 # Defino la  Optimizacion Bayesiana
 PARAM <- list()
 
-PARAM$home <- "~/buckets/b1/"
+PARAM$home <- "~/buckets/b1/" #cmbiarlo por el home (esta en el libroe de la materia)
 
 PARAM$experimento <- "HT3440"
 
@@ -38,7 +38,7 @@ PARAM$xval_folds <- 5
 # cantidad de iteraciones de la Optimizacion Bayesiana
 PARAM$BO_iter <- 300
 
-# la letra L al final de 1L significa ENTERO
+# la letra L al final de 1L significa ENTERO. Estos parametros se pueden/deben cambiar en algunmomento. No va  acambiar mucho porque el algorutmo es bastasnte inteligente para buscar
 PARAM$hs <- makeParamSet(
   makeNumericParam("cp", lower = -1, upper = 0.1),
   makeIntegerParam("minsplit", lower = 1L, upper = 8000L),
