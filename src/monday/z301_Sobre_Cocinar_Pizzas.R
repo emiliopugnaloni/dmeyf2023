@@ -24,9 +24,9 @@ require("DiceKriging")
 require("mlrMBO")
 
 # Poner la carpeta de la materia de SU computadora local
-setwd("/home/aleb/dmeyf23")
+setwd("C:/Users/emiba/Documents/DMenEyF")
 # Poner sus semillas
-semillas <- c(17, 19, 23, 29, 31)
+semillas <-  c(673787,673789,673811,673817,673837)
 
 # Cargamos el dataset
 dataset <- fread("./datasets/competencia_01.csv")
@@ -118,11 +118,11 @@ print(seconds_to_period(n_md * n_ms * n_seeds * model_time * n_mb))
 ## ---------------------------
 
 set.seed(semillas[1])
-dist_uni <- matrix(runif(20), 10, 2)
+dist_uni <- matrix(runif(200), 50, 4)
 
 # LHS Latin hypercube sampling
 set.seed(semillas[1])
-dist_lhs <- optimumLHS(10, 2)
+dist_lhs <- optimumLHS(50, 4)
 
 par(mfrow = c(1, 2))
 plot(dist_uni)
@@ -137,7 +137,7 @@ plot(dist_lhs)
 ## Step 5: Tomando una muestra de sangre
 ## ---------------------------
 
-# Armamos una función para modelar con el fin de simplificar el código futuro
+# Armamos una función para modelar con el fin de simplificar el código futuro. De aca calculamos la curva ROC y extraemos el AUC
 modelo_rpart <- function(train, test, cp =  0, ms = 20, mb = 1, md = 10) {
     modelo <- rpart(clase_binaria ~ ., data = train,
                     xval = 0,
@@ -155,7 +155,8 @@ modelo_rpart <- function(train, test, cp =  0, ms = 20, mb = 1, md = 10) {
     unlist(auc_t@y.values)
 }
 
-# Función para tomar un muestra dejando todos los elementos de la clase BAJA+2
+# Función para tomar un muestra dejando todos los elementos de la clase BAJA+2.
+#Esto es para tomar una muestra y trabajar con menos datos. No es recomendable muetras todo al azar, si no me quedo con todos los casos positivo y una muestra de los negativos
 tomar_muestra <- function(datos, resto = 10000) {
       t <- datos$clase_binaria == "evento"
       r <- rep(FALSE, length(datos$clase_binaria))
@@ -165,15 +166,17 @@ tomar_muestra <- function(datos, resto = 10000) {
 
 set.seed(semillas[1])
 ds_sample <- tomar_muestra(dataset)
-table(dataset[ds_sample]$clase_binaria)
+table(dataset[ds_sample]$clase_binaria)  #me quedo con todos los eventos y 1000 no eventos
 
 ## Preguntas
 ## - ¿Qué tipo de muestre se tomó?
 ## - ¿Hay mejores formas de muestrear?
-## - ¿Es bueno muestrear?
-## - ¿Qué efectos en las métricas va a producir el muestreo?
+## - ¿Es bueno muestrear? No, pero no me queda otra por el tiempo
+## - ¿Qué efectos en las métricas va a producir el muestreo? Metricas mas alejadas d la realidad
+##-- Como afecta a los parametros? No afecta a los parametros, luego cuando va a Test (si son mas datos) los cortes los va a producir igual
 ## - ¿Por qué se eligió usar el AUC?
 ## - ¿Qué hay que cambiar en la función de ganancia para poder utilizarla?
+# AUC no se ve afectada por el sample. Otras metricas si se ven afectadas
 
 ## ---------------------------
 ## Step 6: Comparando tiempos con o sin muestras
@@ -197,13 +200,13 @@ print(t1 - t0)
 print(r2)
 
 ## Preguntas
-## - ¿Por qué sólo se muestrea train?
+## - ¿Por qué sólo se muestrea train? Para que no tarde tanto en estimar
 
 ## ---------------------------
 ## Step 7: Buscando el mejor modelo con muestras aleatorias LHS
 ## ---------------------------
 
-# Una función auxiliar para los experimentos
+# Una función auxiliar para los experimentos. Devuelve el AUC
 experimento_rpart <- function(ds, semillas, cp = 0, ms = 20, mb = 1, md = 10) {
   auc <- c()
   for (s in semillas) {
@@ -225,11 +228,11 @@ experimento_rpart <- function(ds, semillas, cp = 0, ms = 20, mb = 1, md = 10) {
 
 set.seed(semillas[1])
 cantidad_puntos <- 25
-espacio_busqueda_1 <- optimumLHS(cantidad_puntos, 2)
+espacio_busqueda_1 <- optimumLHS(cantidad_puntos, 2) #se armo una grilla de LHS (distriubuye mejor los puntos de 1 distr. uniforme en el espacio)
 
 # la primera columna es para el maxdepth, y la segunda para el minslip
-espacio_busqueda_1[, 1] <- floor(15 * espacio_busqueda_1[, 1]) + 4
-espacio_busqueda_1[, 2] <- floor(200 * espacio_busqueda_1[, 2]) + 2
+espacio_busqueda_1[, 1] <- floor(15 * espacio_busqueda_1[, 1]) + 4  #el max depth va a estar entre 4 y 15+4
+espacio_busqueda_1[, 2] <- floor(200 * espacio_busqueda_1[, 2]) + 2 #el minsplit va a estar entre 2 y 202
 
 resultados_random_search <- data.table()
 for (e in 1:cantidad_puntos) {
@@ -251,12 +254,15 @@ ggplot(resultados_random_search, aes(x = md, y = ms, color = auc)) +
 
 
 ## Preguntas
-## - ¿Hay alguna zona dónde parece que hay más ganancia?
-## - ¿Cómo podemos continuar nuestra búsqueda?
+## - ¿Hay alguna zona dónde parece que hay más ganancia? Si, pero son muchas las ares
+## - ¿Cómo podemos continuar nuestra búsqueda? Si, pero no hay mucha variacion. Los puntos van a ser bastante parecidos
 
 ## ---------------------------
 ## Step 8: Trabajando con herramientas más profesionales
 ## ---------------------------
+
+#Lo que querems es despues de la etapa de exploracion, encontrar algo mejor -> Explotacion. 
+# Hay 2 tecnicas que s eusan: Bayesiao y TMB. Este es un ejemplo de la optimizacion bayesiana
 
 # Veamos un ejemplo
 set.seed(semillas[1])
@@ -288,10 +294,17 @@ plotExampleRun(run, iters = 8, densregion = TRUE, pause = FALSE)
 plotExampleRun(run, iters = 9, densregion = TRUE, pause = FALSE)
 plotExampleRun(run, iters = 10, densregion = TRUE, pause = FALSE)
 
+#lo que se hizo fue hacer una funcion seno (linea solida que el modelo no ve) y tirar unos puntitos. Y despues 
+#crea una funcion latente (una especie de regresion) que tiene bandas de intervalo de confinza. A partir de los intervalos de confianza,
+#mira los lugares donde la variabilidad es maxima (y hay mas posibilidaddes de ganancia). Iterativamente va encontrando mejores minimos
+#Este metodo se llama metodo bayesiano.
+#en el grafico de abajo, los puntos mas altos son los que tienen mas variabilida
+
 ## ---------------------------
 ## Step 9: Introduciendo la técnica en nuestro conjunto
 ## ---------------------------
 
+## Buscamos el mejor MaxDepth (pero con la tecnica de mirar todo (de 4 a 20))
 resultados_maxdepth <- data.table()
 
 for (v in 4:20) {
@@ -302,7 +315,7 @@ for (v in 4:20) {
     resultados_maxdepth <- rbindlist(list(resultados_maxdepth, r))
 }
 
-ggplot(resultados_maxdepth, aes(md, auc)) + geom_point()
+ggplot(resultados_maxdepth, aes(md, auc)) + geom_point()   
 
 ## ---------------------------
 ## Step 9: Buscando con una Opt. Bayesiana para 1 parámetro
@@ -313,11 +326,11 @@ obj_fun_md <- function(x) {
   experimento_rpart(dataset, semillas, md = x$maxdepth)
 }
 
-obj_fun <- makeSingleObjectiveFunction(
+obj_fun <- makeSingleObjectiveFunction(  #va a maximizar la fun obj = AUC
   minimize = FALSE,
   fn = obj_fun_md,
   par.set = makeParamSet(
-    makeIntegerParam("maxdepth",  lower = 4L, upper = 20L)
+    makeIntegerParam("maxdepth",  lower = 4L, upper = 20L) #lo hace a partir de variar el max depth
   ),
   # noisy = TRUE,
   has.simple.signature = FALSE
@@ -337,7 +350,7 @@ lrn <- makeMBOLearner(ctrl, obj_fun)
 surr_km <- makeLearner("regr.km", predict.type = "se", covtype = "matern3_2")
 
 run_md <- mbo(obj_fun, learner = surr_km, control = ctrl)
-print(run_md)
+print(run_md) #nos dice que el parametri recomendado el 7 (coincide con lo anterior, corriendo todos los ptos)
 
 
 ## ---------------------------
@@ -355,16 +368,16 @@ obj_fun <- makeSingleObjectiveFunction(
   minimize = FALSE,
   fn = obj_fun_md_ms,
   par.set = makeParamSet(
-    makeIntegerParam("maxdepth",  lower = 4L, upper = 20L),
-    makeIntegerParam("minsplit",  lower = 1L, upper = 200L)
+    makeIntegerParam("maxdepth",  lower = 4L, upper = 20L), #variar estos limites para maxdepth
+    makeIntegerParam("minsplit",  lower = 1L, upper = 300L) #variar estso para minsplit
     # makeNumericParam <- para parámetros continuos
   ),
-  # noisy = TRUE,
+  # noisy = TRUE, #el noisy es un parametro que contempla que puede haber cierto ruido. Ante esto, el algoritmo tiene mas cuidado y vuelve a probar casos sospechosos
   has.simple.signature = FALSE
 )
 
 ctrl <- makeMBOControl()
-ctrl <- setMBOControlTermination(ctrl, iters = 16L)
+ctrl <- setMBOControlTermination(ctrl, iters = 10L)  #esta es la cantidad de iteraciones del optimizador
 ctrl <- setMBOControlInfill(
   ctrl,
   crit = makeMBOInfillCritEI(),
@@ -383,3 +396,5 @@ print(run_md_ms)
 ## Visualizamos
 iter <- as.data.frame(run_md_ms$opt.path)
 ggplot(iter, aes(y=minsplit,x=maxdepth, color=prop.type)) + geom_point(aes(size = y))
+
+#el modelo se encuetrna por esta zona.Puede variar un poco, se mpuede explorar un poco mas. Pero por esta zona se tiene el maximo

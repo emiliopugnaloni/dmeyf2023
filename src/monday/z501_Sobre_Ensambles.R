@@ -48,9 +48,9 @@ require("lightgbm")
 
 
 # Poner la carpeta de la materia de SU computadora local
-setwd("/home/aleb/dmeyf23")
+setwd("C:/Users/emiba/Documents/DMenEyF")
 # Poner sus semillas
-semillas <- c(17, 19, 23, 29, 31)
+semillas <- c(673787,673789,673811,673817,673837)
 
 # Cargamos el dataset
 dataset <- fread("./datasets/competencia_01.csv")
@@ -82,7 +82,7 @@ modelo_rf_1 <- ranger(clase_binaria1 ~ ., data = dtrain,
                   mtry = n_variables,
                   splitrule = "gini",
                   sample.fraction = 0.66,
-                  importance = "impurity",
+                  importance = "impurity", #es gini
                   verbose = TRUE)
 t1 <- Sys.time()
 as.numeric(t1 - t0, units = "secs")
@@ -127,6 +127,7 @@ importancia
 ## ---------------------------
 ## Step 5: Un experimento con canaritos
 ## ---------------------------
+
 
 dtrain$canarito <- runif(nrow(dtrain))
 

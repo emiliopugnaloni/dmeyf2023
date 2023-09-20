@@ -3,6 +3,8 @@
 # trabaja con la clase_binaria2
 #   POS={BAJA+1, BAJA+2}   NEG={CONTINUA}
 
+#esto lo hace porque la clase baaja+1 y baja+2 son parecidas en las distribuciones
+
 # limpio la memoria
 rm(list = ls()) # remove all objects
 gc() # garbage collection

@@ -1,5 +1,5 @@
 ##
-## Sobre El Futuro
+## Sobre El Futuro: para reflexionar en el punto de corte. Vamos a comparar la meseta del publico vs la meseta del privado
 ##
 ## ---------------------------
 ## Step 1: Setup

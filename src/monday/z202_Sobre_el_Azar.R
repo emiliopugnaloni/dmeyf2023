@@ -23,9 +23,9 @@ require("ggplot2")
 
 
 # Poner la carpeta de la materia de SU computadora local
-setwd("/home/aleb/dmeyf23")
+setwd("C:/Users/emiba/Documents/DMenEyF")
 # Poner sus semillas
-semillas <- c(17, 19, 23, 29, 31)
+semillas <- c(673787,673789,673811,673817,673837)
 
 # Cargamos el dataset
 dataset <- fread("./datasets/competencia_01.csv")
@@ -56,7 +56,7 @@ dtest   <-  dataset[-in_training, ]
 ## - ¿Por qué usamos semillas?
 ## - ¿Qué es una partición estratificada?
 ## - ¿Tiene realemente alguna ventaja la partición estratificada ?
-
+# no tanto porque tenemos 900 de la clase baja. 900 es un numero grande, por proba, casi que va a quedar igual que sin estratificar
 ## ---------------------------
 ## Step 2: Armando el primer modelo particionado
 ## ---------------------------
@@ -135,6 +135,7 @@ print(Sys.time() - t0)
 ## Preguntas:
 ## ¿Cree que puede cambiar mucho la ganancia en **test** para dos semillas
 ## distintas?
+#porque se hacen split distintos
 
 ## ---------------------------
 ## Step 5: Analizando el azar de las semillas
@@ -157,7 +158,7 @@ ggplot() + aes(resultados_n_gan) + geom_density()
 ## y nos damos cuenta que las `semillas` pueden distorsionar enormemente 
 ## las métricas reales (si es que existen).
 ## - ¿Por qué se produce semejante dispersión?
-## - ¿Cuál considera que es el "valor real"?
+## - ¿Cuál considera que es el "valor real"? el promedio esata mas cerca
 ## 
 ##   Dicho de otra forma, si aplicara el mismo modelo a un nuevo conjunto de 
 ##   datos, ¿cuál sería el esperado?
@@ -188,7 +189,8 @@ print(mean(resultados_n_mcv))
 ggplot() + aes(resultados_n_mcv) + geom_density()
 
 ## NOTA: Esta técnica es conocida como Montecarlo Cross Validation
-##
+##  se entrenar varios modelo con distintas semillas y se mide la performance media
+
 ## Preguntas
 ## - ¿Qué efecto observa cuando se toma como medición el promedio de 5 árboles?
 ## - ¿Desapareció el error?
@@ -244,9 +246,9 @@ resultados_grid_search <- data.table()
 # Complete los valores que se van a combinar para cada parámetro a explorar
 
 for (cp in c(-1, 0.01)) { 
-for (md in c(5, 10, 15, 30)) {
-for (ms in c(1, 50, 500, 1000)) {
-for (mb in c(1, as.integer(ms / 2))) {
+for (md in c(5, 10, 15, 30)) {  #max depth
+for (ms in c(1, 50, 500, 1000)) {  #min split
+for (mb in c(1, as.integer(ms / 2))) { #min bucket (se define en funcion del min split en este caso)
 
     t0 <- Sys.time()
     gan_semillas <- c()
