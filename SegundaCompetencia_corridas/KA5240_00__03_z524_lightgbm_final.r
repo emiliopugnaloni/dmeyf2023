@@ -24,11 +24,11 @@ PARAM$input$future <- c(202107) # meses donde se aplica el modelo
 
 PARAM$finalmodel$semilla <- 673787
 
-PARAM$finalmodel$num_iterations <- 861
-PARAM$finalmodel$learning_rate <- 0.0884876546693628
-PARAM$finalmodel$feature_fraction <- 0.764719098144793
-PARAM$finalmodel$min_data_in_leaf <- 228
-PARAM$finalmodel$num_leaves <- 848
+PARAM$finalmodel$num_iterations <- 4968
+PARAM$finalmodel$learning_rate <- 0.0202070252518405
+PARAM$finalmodel$feature_fraction <- 0.848564296457396
+PARAM$finalmodel$min_data_in_leaf <- 464
+PARAM$finalmodel$num_leaves <- 778
 
 
 PARAM$finalmodel$max_bin <- 31
@@ -132,8 +132,8 @@ setorder(tb_entrega, -prob)
 
 
 # Hago Corte por Modelo
-num_envios= 14993
-nombre_archivo = "_01_z524"
+num_envios= 14851
+nombre_archivo = "_02_z524"
 
 tb_entrega[, Predicted := 0L]
 tb_entrega[1:num_envios, Predicted := 1L]
@@ -146,12 +146,12 @@ fwrite(tb_entrega[, list(numero_de_cliente, Predicted)],
 
 
 
-# genero archivos con los  "envios" mejores
-# deben subirse "inteligentemente" a Kaggle para no malgastar submits
-# si la palabra inteligentemente no le significa nada aun
-# suba TODOS los archivos a Kaggle
-# espera a la siguiente clase sincronica en donde el tema sera explicado
-
+# # genero archivos con los  "envios" mejores
+# # deben subirse "inteligentemente" a Kaggle para no malgastar submits
+# # si la palabra inteligentemente no le significa nada aun
+# # suba TODOS los archivos a Kaggle
+# # espera a la siguiente clase sincronica en donde el tema sera explicado
+# 
 # cortes <- seq(8000, 13000, by = 500)
 # for (envios in cortes) {
 #   tb_entrega[, Predicted := 0L]
