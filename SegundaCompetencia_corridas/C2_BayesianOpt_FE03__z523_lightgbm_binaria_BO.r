@@ -222,6 +222,7 @@ setwd("~/buckets/b1/") # Establezco el Working Directory
 
 # cargo el dataset donde voy a entrenar el modelo
 dataset <- fread(PARAM$input$dataset)
+dataset[, clase_ternaria_lag1 :=NULL] #eliminamos esta variable que se creo mal
 
 # creo la carpeta donde va el experimento
 dir.create("./exp/", showWarnings = FALSE)
