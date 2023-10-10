@@ -20,10 +20,11 @@ jugadoras <- c(taurasi, peloton)
 
 for (i in 1:10) {
   vaciertos <- mapply(ftirar, jugadoras, 100) # cada jugadora tira 100 tiros
-  mejor_ronda <- which.max(vaciertos)
-  aciertos_torneo <- vaciertos[mejor_ronda]
+  mejor_ronda <- which.max(vaciertos)  #el indicde de la mejor de la ronda
+  aciertos_torneo <- vaciertos[mejor_ronda]  #los aciertos de la mejor
 
-  aciertos_segunda <- ftirar(jugadoras[mejor_ronda], 100)
+  aciertos_segunda <- ftirar(jugadoras[mejor_ronda], 100)  #los aciertos de la mejor la 2da vez que tira
 
   cat(aciertos_torneo, "\t", aciertos_segunda, "\n")
 }
+

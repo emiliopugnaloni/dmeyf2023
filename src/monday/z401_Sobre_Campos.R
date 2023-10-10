@@ -20,7 +20,8 @@ require("dplyr")
 
 
 # Poner la carpeta de la materia de SU computadora local
-setwd("/home/aleb/dmeyf23")
+setwd("C:/Users/epugnalo/OneDrive - Telefonica/Documents/Data Mining UBA/2C - DM en Economica y Finanzas") # Establezco el Working Directory
+
 # Poner sus semillas
 semillas <- c(17, 19, 23, 29, 31)
 
@@ -71,6 +72,9 @@ modelo <- rpart(clase_binaria ~ .,
 calcular_ganancia(modelo, dtest)
 print(modelo$variable.importance)
 
+
+# values = modelo$variable.importance
+# write.csv(data.frame(values), "importancia_variables.csv")
 
 ## Preguntas
 ## - ¿Cuáles son las variables más importantes para el modelo?

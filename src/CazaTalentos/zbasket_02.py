@@ -32,7 +32,4 @@ for i in range(10000): # diez mil experimentos
   if mejor_ronda == 0:
     primera_ganadora += 1
 
-
-
-
 print(primera_ganadora)
