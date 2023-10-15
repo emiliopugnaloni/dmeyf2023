@@ -1,0 +1,8 @@
+El Feature Enginering se realizo en 3 etapas:
+ - fe01: se trabajo las variables rotas y la creacion de variables nuevas
+ - fe02: se pasaron la variables numericas a percentiles, para contrarestar el drifing. Tambien, se crearon carnaritos para 
+	luego explorar las variables que ameritaban ser incluidas en el feature engineering historico (se estimo un modelo y se miro la importancia de las variables)
+ - fe03: se crearon variables historicas. Lag1 para todas, y otras mas para las relevantes
+
+Se corrio el C2_BayesianOpt_FE04__z523_lightgbm_binaria_BO para encontrar la mejor combinacion de hiperparametros
+Se corrio C2_ModeloFinal_FE04__z524_lightgbm_final con la mejor combinacion. Luego se subieron distintos cortes a Kaggle.  El elegido fue el de 15mil
