@@ -34,7 +34,7 @@ PARAM <- list()
 
 PARAM$experimento <- "ExpColab_Baseline_LGBM_OB"
 
-PARAM$input$dataset <- "./datasets/competencia_02.csv.gz"
+PARAM$input$dataset <- "./datasets/competencia_03.csv.gz"
 
 # los meses en los que vamos a entrenar
 #  mucha magia emerger de esta eleccion
@@ -297,18 +297,18 @@ klog <- paste0(PARAM$experimento, ".txt")
 # por ahora, no hago nada
 
 
-cols <- setdiff(names(data), c("numero_de_cliente", "foto_mes"))
+cols <- setdiff(names(dataset), c("numero_de_cliente", "foto_mes"))
 
 for (col in cols) {
   
   lag_names_1 <- paste0(col, "_lag1")
-  data[, (lag_names_1) := shift(.SD, 1), by = numero_de_cliente, .SDcols = col]
+  dataset[, (lag_names_1) := shift(.SD, 1), by = numero_de_cliente, .SDcols = col]
   
   lag_names_3 <- paste0(col, "_lag3")
-  data[, (lag_names_3) := shift(.SD, 3), by = numero_de_cliente, .SDcols = col]
+  dataset[, (lag_names_3) := shift(.SD, 3), by = numero_de_cliente, .SDcols = col]
   
   lag_names_6 <- paste0(col, "_lag6")
-  data[, (lag_names_6) := shift(.SD, 6), by = numero_de_cliente, .SDcols = col]
+  dataset[, (lag_names_6) := shift(.SD, 6), by = numero_de_cliente, .SDcols = col]
 }
 
 
