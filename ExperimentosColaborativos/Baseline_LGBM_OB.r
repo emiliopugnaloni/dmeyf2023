@@ -297,7 +297,7 @@ klog <- paste0(PARAM$experimento, ".txt")
 # por ahora, no hago nada
 
 
-cols <- setdiff(names(dataset), c("numero_de_cliente", "foto_mes"))
+cols <- setdiff(names(dataset), c("numero_de_cliente", "foto_mes", "clase_ternaria"))
 
 for (col in cols) {
   

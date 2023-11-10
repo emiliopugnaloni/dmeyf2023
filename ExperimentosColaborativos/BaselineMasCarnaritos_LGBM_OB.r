@@ -237,17 +237,12 @@ EstimarGanancia_lightgbm <- function(x) {
 
 
   # voy grabando las mejores column importance
-  if (ganancia_test_normalizada > GLOBAL_gananciamax) {
-    GLOBAL_gananciamax <<- ganancia_test_normalizada
-    tb_importancia <- as.data.table(lgb.importance(modelo_train))
-
-    fwrite(tb_importancia,
-      file = paste0("impo_", sprintf("%03d", GLOBAL_iteracion), ".txt"),
-      sep = "\t"
-    )
-
-    rm(tb_importancia)
-  }
+  tb_importancia <- as.data.table(lgb.importance(modelo_train))
+  fwrite(tb_importancia,
+         file = paste0("impo_", sprintf("%03d", GLOBAL_iteracion), ".txt"),
+         sep = "\t"
+  )
+  rm(tb_importancia)
 
 
   # logueo final
@@ -296,7 +291,7 @@ klog <- paste0(PARAM$experimento, ".txt")
 # Data Drifting
 # por ahora, no hago nada
 
-cols <- setdiff(names(dataset), c("numero_de_cliente", "foto_mes"))
+cols <- setdiff(names(dataset), c("numero_de_cliente", "foto_mes", "clase_ternaria"))
 
 for (col in cols) {
   
@@ -314,9 +309,9 @@ for (col in cols) {
 #Agregamos Carnaritos
 
 set.seed(PARAM$trainingstrategy$semilla_azar)
-cant_carnaritos = round(length(colnames(dataset))*0.2)
+cant_carnaritos = round(length(colnames(dataset))*0.2)  #123
 
-for (i in 1:cant_carnaritos)
+for (i in 1:cant_carnaritos)  
 {
   dataset[, paste0("carnarito",i) := runif(.N)]
 }
