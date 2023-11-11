@@ -66,6 +66,10 @@ PARAM$finalmodel$lgb_basicos <- list(
   seed = PARAM$finalmodel$semilla
 )
 
+PARAM$hyperparametertuning$POS_ganancia <- 273000
+PARAM$hyperparametertuning$NEG_ganancia <- -7000
+
+
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------

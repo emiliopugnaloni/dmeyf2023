@@ -69,6 +69,10 @@ PARAM$finalmodel$lgb_basicos <- list(
 )
 
 
+PARAM$hyperparametertuning$POS_ganancia <- 273000
+PARAM$hyperparametertuning$NEG_ganancia <- -7000
+
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui empieza el programa
