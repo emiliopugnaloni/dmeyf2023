@@ -14,7 +14,7 @@ require("lightgbm")
 # defino los parametros de la corrida, en una lista, la variable global  PARAM
 #  muy pronto esto se leera desde un archivo formato .yaml
 PARAM <- list()
-PARAM$experimento <- "ExpColab_Baseline_Final"
+PARAM$experimento <- "ExpColab_FeaturesSelected_Final"
 
 PARAM$input$dataset <- "./datasets/competencia_03.csv.gz"
 
@@ -24,7 +24,7 @@ PARAM$input$future <- c(202107) # meses donde se aplica el modelo
 PARAM$input$kaggle <- c(202109) # meses de la competencia kaggle
 
 
-PARAM$finalmodel$semilla <- 000000
+PARAM$finalmodel$semilla <- 00000
 
 # hiperparametros optimos de BO
 PARAM$finalmodel$optim$num_iterations <- 1559
@@ -97,6 +97,13 @@ for (col in cols) {
   dataset[, (lag_names_6) := shift(.SD, 6), by = numero_de_cliente, .SDcols = col]
 }
 
+
+# Feature Selection
+
+selected_features <- readLines(PARAM$input$selectedfeatures)  #levantamos el archivo con las columnas a usar (en el bucket tiene que estar)
+selected_features <- c(selected_features, "clase_ternaria", "foto_mes") #le agregamos estas dos varibles (que no entran en el Feature Importance)
+
+dataset <- dataset[, ..selected_features, with = FALSE]  #nos quedamos solo con las columnas (el ..selected_features lee el vector selected_features como un vector de columnas)
 
 
 
