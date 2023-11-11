@@ -15,8 +15,10 @@ require("lightgbm")
 #  muy pronto esto se leera desde un archivo formato .yaml
 PARAM <- list()
 PARAM$experimento <- "ExpColab_FeaturesSelected_Final"
-
 PARAM$input$dataset <- "./datasets/competencia_03.csv.gz"
+PARAM$input$selectedfeatures <- "./datasets/ExpColab_FeaturesSelected.txt"  #lugar donde esta el archivo con las features a usar
+
+
 
 # meses donde se entrena el modelo
 PARAM$input$training <- c(202101, 202102, 202103, 202104, 202105, 202106)
@@ -162,8 +164,7 @@ for (i in 1:30)
 {
   
   PARAM$finalmodel$lgb_basicos$seed <- semillas[i]  #ajustamos la semilla
-  dataset_test <- data[foto_mes==202107]
-  
+
   # genero el modelo
   param_completo <- c(PARAM$finalmodel$lgb_basicos,
                       PARAM$finalmodel$optim)

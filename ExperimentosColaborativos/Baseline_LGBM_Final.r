@@ -155,8 +155,7 @@ for (i in 1:30)
 {
   
   PARAM$finalmodel$lgb_basicos$seed <- semillas[i]  #ajustamos la semilla
-  dataset_test <- data[foto_mes==202107]
-  
+
   # genero el modelo
   param_completo <- c(PARAM$finalmodel$lgb_basicos,
                       PARAM$finalmodel$optim)

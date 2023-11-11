@@ -1,0 +1,21 @@
+1) Se corrio una optimizacion bayesiana para el modelo Baseline y para el Baseline + carnaritos (tiene un 20% de carnaritos)
+	 - BaselineMasCarnaritos_LGBM_OB.R
+	 - Baseline_LGBM_OB.R
+
+2) Sobre las 3 mejores iteraciones de BaselineMasCarnaritos_LGBM_OB.R, se analiza la importancia de las variables. 
+Nos quedamos con las columnas que no aparecen ninguna vez debajo de la nube de carnaritos
+
+	- Resultados_BaselineMasCarnaritos_BO.xlsx
+
+A estas columnas, las guardamos en el documento: "FeaturesSelected.txt" y las subimo al bucket en la carpeta de datasets
+Luego, se corre FeaturesSelected_LGBM_OB.R, quien hace una optimizacion bayesiana similar al baseline pero con solo las columnas dentro de "FeaturesSelected.txt"
+
+4) Se corren los scripts finales con los mejores hiperparametros hallados en cada caso:
+	- FeaturesSelected_LGBM_Final.R
+	- Baseline_LGBM_Final.R
+
+Ambos Scripts van a arrojar 2 cosas:
+	- 1 archivo con las ganancias de 30 modelos con distintas semillas en envios de 8mil a 15mil en 202107. 
+	- 1 archivo con las predicciones a 202109 (a subir a kaggle)
+
+5) Se comparan las salidas de los modelos en 

@@ -40,6 +40,7 @@ PARAM$input$selectedfeatures <- "./datasets/ExpColab_FeaturesSelected.txt"  #lug
 
 
 
+
 # los meses en los que vamos a entrenar
 #  mucha magia emerger de esta eleccion
 PARAM$input$testing <- c(202106)
