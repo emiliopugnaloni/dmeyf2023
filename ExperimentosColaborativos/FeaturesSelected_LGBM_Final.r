@@ -16,7 +16,7 @@ require("lightgbm")
 PARAM <- list()
 PARAM$experimento <- "ExpColab_FeaturesSelected_Final"
 PARAM$input$dataset <- "./datasets/competencia_03.csv.gz"
-PARAM$input$selectedfeatures <- "./datasets/ExpColab_FeaturesSelected.txt"  #lugar donde esta el archivo con las features a usar
+PARAM$input$selectedfeatures <- "~/buckets/b1/datasets/ExpColab_FeaturesSelected.txt"  #lugar donde esta el archivo con las features a usar
 
 
 
@@ -29,11 +29,11 @@ PARAM$input$kaggle <- c(202109) # meses de la competencia kaggle
 PARAM$finalmodel$semilla <- 00000
 
 # hiperparametros optimos de BO
-PARAM$finalmodel$optim$num_iterations <- 1559
-PARAM$finalmodel$optim$learning_rate <- 0.031565221818586
-PARAM$finalmodel$optim$feature_fraction <- 0.774842489369135
-PARAM$finalmodel$optim$min_data_in_leaf <- 9195
-PARAM$finalmodel$optim$num_leaves <- 1240
+PARAM$finalmodel$optim$num_iterations <- 20
+PARAM$finalmodel$optim$learning_rate <- 0.141456580269388
+PARAM$finalmodel$optim$feature_fraction <- 0.883744331185376
+PARAM$finalmodel$optim$min_data_in_leaf <- 6772
+PARAM$finalmodel$optim$num_leaves <- 740
 
 
 # Hiperparametros FIJOS de  lightgbm
@@ -180,7 +180,7 @@ for (i in 1:30)
   
   # ahora imprimo la importancia de variables
   tb_importancia <- as.data.table(lgb.importance(modelo))
-  archivo_importancia <- paste0("impo_semilla_",i,",txt")
+  archivo_importancia <- paste0("impo_semilla_",i,".txt")
   
   fwrite(tb_importancia,
          file = archivo_importancia,

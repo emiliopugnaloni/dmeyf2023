@@ -36,7 +36,7 @@ PARAM$experimento <- "ExpColab_FeaturesSelected_LGBM_OB"
 
 PARAM$input$dataset <- "./datasets/competencia_03.csv.gz"
 
-PARAM$input$selectedfeatures <- "./datasets/ExpColab_FeaturesSelected.txt"  #lugar donde esta el archivo con las features a usar
+PARAM$input$selectedfeatures <- "~/buckets/b1/datasets/ExpColab_FeaturesSelected.txt"  #lugar donde esta el archivo con las features a usar
 
 
 
