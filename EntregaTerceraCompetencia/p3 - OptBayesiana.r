@@ -93,13 +93,14 @@ PARAM$lgb_basicos <- list(
 PARAM$bo_lgb <- makeParamSet(
   makeNumericParam("learning_rate", lower = 0.02, upper = 0.3),
   makeNumericParam("feature_fraction", lower = 0.01, upper = 1.0),
-  makeIntegerParam("num_leaves", lower = 8L, upper = 3048L),
+  makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
   makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L),
-  makeIntegerParam("feature_fraction_bynode", lower = 0.0, upper = 1.0),
-  makeIntegerParam("bagging_fraction", lower = 0.0, upper = 1.0),
-  makeIntegerParam("bagging_freq", lower = 1L, upper = 30L),
-  makeIntegerParam("pos_bagging_fraction", lower = 0.0, upper = 1.0),
-  makeIntegerParam("neg_bagging_fraction", lower = 0.0, upper = 1.0)
+  makeNumericParam("bagging_fraction", lower = 0.0, upper = 1.0),
+  makeNumericParam("pos_bagging_fraction", lower = 0.0, upper = 1.0),
+  makeNumericParam("neg_bagging_fraction", lower = 0.0, upper = 1.0),
+  makeIntegerParam("baggin_freq", lower = 1L, upper = 30L),
+  makeNumericParam("feature_fraction_bynode", lower = 0.01, upper = 1.0)
+)
 
 )
 
