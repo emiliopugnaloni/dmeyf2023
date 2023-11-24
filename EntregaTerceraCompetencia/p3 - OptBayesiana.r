@@ -407,8 +407,8 @@ dataset[, testing := 0L]
 dataset[ (foto_mes %in% PARAM$input$testing) | (foto_mes %in% PARAM$input$testing2),  testing := 1L]
 
 
-dataset_test <- dataset[foto_mes %in% PARAM$input$testing[1], ]
-dataset_test2 <- dataset[foto_mes %in% PARAM$input$testing[2], ]
+dataset_test <- dataset[foto_mes %in% PARAM$input$testing, ]
+dataset_test2 <- dataset[foto_mes %in% PARAM$input$testing2, ]
 
 # libero espacio
 rm(dataset)
