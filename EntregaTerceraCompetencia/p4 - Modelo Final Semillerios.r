@@ -16,7 +16,7 @@ require("lightgbm")
 PARAM <- list()
 PARAM$experimento <- "C3_Modelo_Final_Semillerios"
 
-PARAM$input$dataset <- "./datasets/competencia_02_fe03.csv.gz"
+PARAM$input$dataset <- "./datasets/competencia_03_v2_fe.csv.gz"
 
 # meses donde se entrena el modelo
 PARAM$input$training <- c(201906, 201907, 201908, 201909, 201910, 201911, 201912, 202008, 202009, 202010, 
