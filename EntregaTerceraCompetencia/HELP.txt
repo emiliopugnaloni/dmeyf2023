@@ -1,0 +1,6 @@
+1 - Se corrio el script de parte 1 y parte 2 (p1 y p2) para generar el set de datos
+2 - Se corrio una OptBayesiana (p3). Se itero hasta la iteracion 32 por limitantes de credito ($)
+3 - Se corrio varios modelos finales con difernte semilla (p4). Se corrieron 9 semillas (hasta donde alcanzo el credito $)
+4 - Se corrio el script para ensamblar los semillerios (p5)
+
+** El script p4ii era para hacer ensemble de los mejores de la OB, pero no alcanzo el credito ($)
